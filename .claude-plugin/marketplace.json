@@ -1,26 +1,27 @@
 {
-  "name": "arrecheneto-plugins",
+  "name": "desilascarvalho-plugins",
   "owner": {
-    "name": "Helio Arreche"
+    "name": "desilascarvalho"
   },
   "metadata": {
-    "description": "Plugins de IA para negócios do Helio Arreche",
-    "version": "2.1.0",
+    "description": "Plugins de IA para negócios — fork do Prospector de Sites com FTP genérico e SSH/rsync",
+    "version": "2.1.1",
     "autoUpdate": true
   },
   "plugins": [
     {
       "name": "prospector-de-sites",
       "source": "./prospector-de-sites",
-      "description": "Prospeccao semi-automatica com CRM local: encontra negocios bem avaliados com sites ruins no Google Maps, redesenha as paginas com estetica premium (editor visual + comparador antes/depois), publica via FTP/cPanel sozinho (publicador automatico + HTTPS), envia proposta anti-spam com pagina-capa personalizada via Gmail, faz follow-up, le as respostas e gera contrato em Word travado — tudo administrado num dashboard local com kanban e financeiro. Comece pelo /setup.",
+      "description": "Prospeccao semi-automatica com CRM local: encontra negocios bem avaliados com sites ruins no Google Maps, redesenha as paginas com estetica premium (editor visual + comparador antes/depois), publica via FTP/cPanel ou SSH/rsync (publicador automatico + HTTPS), envia proposta anti-spam com pagina-capa personalizada via Gmail, faz follow-up, le as respostas e gera contrato em Word travado — tudo administrado num dashboard local com kanban e financeiro. Comece pelo /setup.",
       "author": {
-        "name": "Helio Arreche"
+        "name": "Helio Arreche (fork por desilascarvalho)"
       },
       "keywords": [
         "prospeccao",
         "landing-page",
         "redesign",
         "ftp-deploy",
+        "ssh-deploy",
         "google-maps",
         "gmail",
         "crm",

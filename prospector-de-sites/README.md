@@ -1,38 +1,92 @@
-# Prospector de Sites — v2.1.0
+# Prospector de Sites — v2.1.1
 
 Prospecção semi-automática de clientes com sites ruins: acha, redesenha, publica e oferta.
 
-## O ciclo
+Suporta publicação via **FTP/cPanel** (qualquer hospedagem compartilhada) ou **SSH/rsync** (VPS).
 
-1. `/setup` — roda uma vez: assinatura, nichos padrão, dados do cPanel da FTP/cPanel (com teste de publicação).
-2. `/prospectar [nicho] [cidade]` — busca no Google Maps negócios nota ≥ 4.7 com site fraco e gera `leads.md` com e-mail, motivo e ranking (padrão: 10 leads).
-3. `/redesenhar` — recria as páginas dos 5+ melhores leads com estética premium, mantendo o conteúdo, logo e paleta reais do cliente.
-4. `/editor [cliente]` — gera versão editável no navegador (textos e imagens) com exportação da página final.
-5. `/publicar [cliente|todos]` — sobe na FTP/cPanel em `dominio.com/clientes/[slug]/`, gera a página-capa de apresentação (antes/depois personalizado, `proposta.html`) e só conclui com HTTPS validado.
-6. `/proposta [cliente|todos]` — escreve o e-mail (rapport, sem preço), passa pela checklist anti-spam e cria o rascunho no Gmail com a página-capa como único link.
-7. `/respostas` — verifica no Gmail quem respondeu e atualiza o dashboard sozinho (dica: agende a verificação diária).
-8. `/followup [cliente]` — 3+ dias sem resposta? Gera o follow-up gentil (1 por lead, nunca repete) já checando quem respondeu antes.
-9. `/contrato [cliente]` — cliente fechou? Gera a minuta do contrato (pronta pra PDF) com os dados do negócio e deixa o rascunho no Gmail.
+---
 
-## Manual e publicação automática
+## 📥 Instalação
 
-O pacote inclui `manual.html` — o manual completo do usuário, copiado pra pasta no `/setup` e **atualizado a cada versão do plugin**. A publicação na FTP/cPanel é automática: senha preenchida uma vez no `prospector-config.json` + `publicar-agora.bat` (2 cliques) quando a rede do sandbox não alcança o FTP — sem login no cPanel.
+### Pré-requisitos
 
-## Dashboard local
+- Claude Cowork com extensão Claude in Chrome
+- Conectores Gmail e Google Drive ativos
+- Python 3 instalado ([python.org](https://www.python.org/downloads/)) com "Add to PATH"
+- Uma pasta conectada no Cowork (ex.: "Clientes")
+- Uma hospedagem com FTP/cPanel **ou** acesso SSH
 
-O plugin mantém um painel de controle na sua pasta: `prospector.db` (banco SQLite) + `dashboard.html`. Duplo clique em `iniciar-dashboard.bat` (requer Python) abre o painel completo em http://localhost:8765 — kanban com drag & drop, edição, exclusão, funil, comparador antes/depois integrado, follow-ups, controle de contratos (pendente/enviado/assinado) e painel financeiro (recebido, a receber e MRR das manutenções), tudo salvo no banco.
+### Instalar o plugin
 
-## Requisitos
+1. **Adicione o marketplace** no Claude Cowork:
+   - Plugins → Gerenciar plugins → Adicionar marketplace
+   - Cole: `https://github.com/desilascarvalho/PROSPECTOR-DE-SITES`
+2. **Instale** o plugin `prospector-de-sites`
+3. **Rode** no chat:
+   ```
+   /setup
+   ```
 
-- Extensão Claude in Chrome conectada (prospecção no Maps e fallback de deploy)
-- Conector do Gmail (rascunhos de proposta)
-- Pasta conectada no Cowork (armazena config, leads e sites)
-- Hospedagem FTP/cPanel com acesso ao cPanel
+## ⚙️ Configuração de deploy
 
-## Onde ficam os dados
+O `/setup` copia o publicador e o dashboard pra sua pasta. As credenciais de publicação você preenche no próprio dashboard (aba Configurações) — nunca pelo chat.
 
-Tudo na pasta conectada: `prospector-config.json` (preferências e credenciais — a senha FTP fica em texto no seu computador), `leads.md` (pipeline) e `sites/[slug]/` (páginas criadas).
+### FTP / cPanel (padrão)
 
-## Como atualizar
+| Campo | Exemplo |
+|---|---|
+| Método | FTP |
+| Usuário FTP / cPanel | `seuusuario` |
+| Domínio principal | `meusite.com.br` |
+| Servidor FTP | `ftp.meusite.com.br` |
+| Pasta base | `clientes` |
+| Senha FTP / cPanel | (sua senha) |
 
-No chat: `/plugin marketplace update arrecheneto-plugins` e reinicie o app (versão certa: 2.1.0). Da 2.1.0 em diante, atualiza sozinho.
+### SSH / rsync
+
+| Campo | Exemplo |
+|---|---|
+| Método | SSH |
+| Servidor SSH | `192.168.1.100` ou `meuvps.com` |
+| Porta SSH | `22` |
+| Usuário SSH | `root` ou `seuusuario` |
+| Caminho remoto | `/home/seuusuario/public_html` |
+| Domínio principal | `meusite.com.br` |
+| Pasta base | `clientes` |
+| Senha SSH | (sua senha) |
+
+> 💡 Se for VPS, ative o HTTPS com Certbot: `certbot --nginx -d meusite.com.br`
+
+## 🚀 O ciclo completo
+
+1. **`/setup`** — uma vez: assinatura, nichos, deploy e teste de conexão
+2. **`/prospectar [nicho] [cidade]`** — busca no Google Maps negócios nota ≥ 4.7 com site fraco
+3. **`/redesenhar`** — recria as páginas dos melhores leads com estética premium
+4. **`/editor [cliente]`** — ajuste fino no navegador (textos e imagens)
+5. **`/publicar [cliente|todos]`** — sobe na hospedagem via FTP ou SSH/rsync + gera capa de proposta
+6. **`/proposta [cliente|todos]`** — cria o e-mail com página-capa como único link
+7. **`/respostas`** — lê o Gmail e atualiza o dashboard (agende diário)
+8. **`/followup [cliente]`** — lembrete gentil para leads sem resposta há 3+ dias
+9. **`/contrato [cliente]`** — cliente fechou? Gera contrato + Word travado
+
+## 📊 Dashboard local
+
+Duplo clique em `iniciar-dashboard.bat` (Windows) ou `.command` (Mac). Abre em http://localhost:8765:
+
+- Kanban com drag & drop · funil · clientes · comparador antes/depois
+- Follow-ups · contratos (pendente/enviado/assinado)
+- Financeiro: recebido, a receber, MRR, projeção 12 meses
+- Configurações: assinatura + conexão de deploy (FTP ou SSH)
+
+## 📁 Dados
+
+Tudo na pasta conectada:
+- `prospector-config.json` — preferências e credenciais (senha em texto no seu computador, nunca no chat)
+- `prospector.db` — banco SQLite do CRM
+- `leads.md` — pipeline de leads
+- `sites/[slug]/` — páginas criadas
+- `publicador-log.txt` — log da publicação automática
+
+## 🔄 Atualizar
+
+No chat: `/plugin marketplace update desilascarvalho-plugins` e reinicie o app.
