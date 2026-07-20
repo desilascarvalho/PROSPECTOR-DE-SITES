@@ -49,7 +49,7 @@ Funciona com: HostGator, Locaweb, KingHost, Hostinger, e todo provedor que ofere
 **Você precisa ter:**
 - Usuário FTP / cPanel
 - Senha do FTP / cPanel
-- Servidor FTP (ex.: `ftp.seusite.com.br` ou `br1024.hostgator.com.br`)
+- Servidor FTP (ex.: `ftp.seusite.com.br`)
 - Domínio principal
 - Acesso ao cPanel (para ativar SSL, se necessário)
 
