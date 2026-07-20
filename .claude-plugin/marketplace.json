@@ -12,7 +12,7 @@
     {
       "name": "prospector-de-sites",
       "source": "./prospector-de-sites",
-      "description": "Prospecção semi-automática com CRM local: encontra negócios bem avaliados com sites ruins no Google Maps, redesenha as páginas com estética premium (editor visual + comparador antes/depois), publica na HostGator sozinho (publicador automático + HTTPS), envia proposta anti-spam com página-capa personalizada via Gmail, faz follow-up, lê as respostas e gera contrato em Word travado — tudo administrado num dashboard local com kanban e financeiro. Comece pelo /setup.",
+      "description": "Prospeccao semi-automatica com CRM local: encontra negocios bem avaliados com sites ruins no Google Maps, redesenha as paginas com estetica premium (editor visual + comparador antes/depois), publica via FTP/cPanel sozinho (publicador automatico + HTTPS), envia proposta anti-spam com pagina-capa personalizada via Gmail, faz follow-up, le as respostas e gera contrato em Word travado — tudo administrado num dashboard local com kanban e financeiro. Comece pelo /setup.",
       "author": {
         "name": "Helio Arreche"
       },
@@ -20,7 +20,7 @@
         "prospeccao",
         "landing-page",
         "redesign",
-        "hostgator",
+        "ftp-deploy",
         "google-maps",
         "gmail",
         "crm",

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Prospector de Sites — publica a fila na HostGator (Mac).
+# Prospector de Sites — publica a fila via FTP (Mac).
 # Manual: duplo clique. Automatico (launchd): chamado com --auto (log em publicador-log.txt, sem pause).
 cd "$(dirname "$0")"
 AUTO=0; [ "$1" = "--auto" ] && AUTO=1
@@ -8,10 +8,10 @@ fim(){ [ $AUTO -eq 0 ] && read -p "Pressione Enter para fechar..."; exit $1; }
 [ -f fila-publicacao.txt ] || { [ $AUTO -eq 0 ] && log "Nada na fila — peca /publicar ao Claude primeiro."; fim 0; }
 CFG=prospector-config.json
 [ -f $CFG ] || { log "ERRO: prospector-config.json nao encontrado."; fim 1; }
-U=$(python3 -c "import json;print(json.load(open('$CFG'))['hostgator'].get('usuario',''))")
-P=$(python3 -c "import json;print(json.load(open('$CFG'))['hostgator'].get('senha',''))")
-SRV=$(python3 -c "import json;print(json.load(open('$CFG'))['hostgator'].get('servidor',''))")
-[ -n "$U" ] && [ -n "$P" ] && [ -n "$SRV" ] || { log "ERRO: preencha a conexao HostGator no dashboard (Configuracoes), incluindo a senha."; fim 1; }
+U=$(python3 -c "import json;cfg=json.load(open('$CFG'));d=cfg.get('deploy') or cfg.get('hostgator') or {};print(d.get('usuario',''))")
+P=$(python3 -c "import json;cfg=json.load(open('$CFG'));d=cfg.get('deploy') or cfg.get('hostgator') or {};print(d.get('senha',''))")
+SRV=$(python3 -c "import json;cfg=json.load(open('$CFG'));d=cfg.get('deploy') or cfg.get('hostgator') or {};print(d.get('servidor',''))")
+[ -n "$U" ] && [ -n "$P" ] && [ -n "$SRV" ] || { log "ERRO: preencha a conexao FTP no dashboard (Configuracoes), incluindo a senha."; fim 1; }
 OK=0; FALHA=0
 while IFS='|' read -r LOCAL REMOTO; do
   LOCAL=$(echo "$LOCAL" | xargs); REMOTO=$(echo "$REMOTO" | xargs)

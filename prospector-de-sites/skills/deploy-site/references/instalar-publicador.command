@@ -20,7 +20,7 @@ cat > "$PLIST" <<PLISTEOF
 PLISTEOF
 launchctl unload "$PLIST" 2>/dev/null
 if launchctl load "$PLIST"; then
-  echo "[OK] Publicador automatico instalado! A cada 1 minuto ele verifica a fila e publica sozinho."
+  echo "[OK] Publicador automatico instalado! A cada 1 minuto ele verifica a fila e publica sozinho via FTP."
   echo "Para desinstalar um dia: launchctl unload \"$PLIST\" && rm \"$PLIST\""
 else
   echo "[ERRO] Nao consegui registrar. Rode este arquivo de novo ou me mande o erro acima."

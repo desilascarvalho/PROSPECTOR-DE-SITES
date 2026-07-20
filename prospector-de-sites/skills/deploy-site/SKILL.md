@@ -1,15 +1,17 @@
 ---
-name: deploy-hostgator
-description: Esta skill deve ser usada ao publicar páginas na hospedagem HostGator — upload via script local automático, FTP ou cPanel, criação de pastas por cliente, verificação da URL pública e HTTPS. Acione quando o usuário disser "publicar", "subir o site", "colocar no ar", "deploy", "hostgator" ou rodar /publicar ou o teste de conexão do /setup.
+name: deploy-site
+description: Esta skill deve ser usada ao publicar páginas em qualquer hospedagem com suporte a FTP ou cPanel — upload via script local automático, FTP direto ou cPanel File Manager, criação de pastas por cliente, verificação da URL pública e HTTPS. Acione quando o usuário disser "publicar", "subir o site", "colocar no ar", "deploy", "ftp" ou rodar /publicar ou o teste de conexão do /setup.
 ---
 
-# Deploy na HostGator
+# Deploy via FTP / cPanel (qualquer hospedagem)
 
 Publicar páginas em `public_html/[pastaBase]/[slug]/` e garantir a URL pública `https://[dominio]/[pastaBase]/[slug]/` funcionando.
 
+Não depende de provedor específico — funciona com qualquer hospedagem que ofereça FTP e/ou cPanel (HostGator, Locaweb, KingHost, Hostinger, etc.).
+
 ## Credenciais
 
-Tudo vem de `prospector-config.json` (bloco `hostgator`): `usuario`, `dominio`, `servidor`, `senha`, `pastaBase` (padrão `clientes`). **A senha vive SÓ nesse arquivo, no computador do usuário — nunca é digitada no chat, nunca é exibida em nenhuma saída, log ou comando mostrado ao usuário.** Se a senha estiver vazia, oriente o usuário: dashboard → aba Configurações → Conexão HostGator → colar a senha e salvar (ou editar o arquivo na mão). Nunca pelo chat.
+Tudo vem de `prospector-config.json` (bloco `deploy` ou `hostgator` para compatibilidade): `usuario`, `dominio`, `servidor`, `senha`, `pastaBase` (padrão `clientes`). **A senha vive SÓ nesse arquivo, no computador do usuário — nunca é digitada no chat, nunca é exibida em nenhuma saída, log ou comando mostrado ao usuário.** Se a senha estiver vazia, oriente o usuário: dashboard → aba Configurações → Conexão FTP → colar a senha e salvar (ou editar o arquivo na mão). Nunca pelo chat.
 
 ## Método 1 — Publicador automático local (RECOMENDADO: instala uma vez, nunca mais clica)
 
@@ -27,14 +29,14 @@ A rede do sandbox do Cowork NÃO alcança FTP nem cPanel — isso vale para todo
 
 Antes de acionar o usuário, tente publicar você mesmo: `curl -sS --connect-timeout 15 -T [arquivo] "ftp://[servidor]/public_html/[pastaBase]/[slug]/index.html" --user "[usuario]:[senha do config]" --ftp-create-dirs` (senha lida do arquivo via script — jamais mostrada). Se funcionar, ótimo: zero ação do usuário. Se a rede do sandbox bloquear (timeout/refused), caia SEM DRAMA para o Método 1 — não insista em tentativas repetidas.
 
-## Método 3 — Navegador (último recurso)
+## Método 3 — cPanel File Manager (último recurso)
 
 Se os métodos 1 e 2 falharem (ex.: curl ausente na máquina do usuário): cPanel File Manager pelo Claude in Chrome — o USUÁRIO faz o login dele (nunca peça a senha no chat), você navega, cria as pastas e faz upload pela interface.
 
 ## Verificação (obrigatória, após qualquer método)
 
 1. Abra `https://[dominio]/[pastaBase]/[slug]/` e a capa `.../proposta.html` — confirme que carregam com conteúdo certo.
-2. **HTTPS obrigatório**: precisa carregar com cadeado válido. Se der erro de certificado: HostGator tem SSL grátis — guie: cPanel → **SSL/TLS Status** → marcar o domínio → **Run AutoSSL** (minutos). Enquanto o HTTPS não valida, a publicação NÃO está concluída — link `http://` NUNCA vai para cliente.
+2. **HTTPS obrigatório**: precisa carregar com cadeado válido. Se der erro de certificado: acesse o cPanel da hospedagem → **SSL/TLS Status** → marcar o domínio → **Run AutoSSL** (minutos). Enquanto o HTTPS não valida, a publicação NÃO está concluída — link `http://` NUNCA vai para cliente.
 3. Atualize `leads.md` + dashboard com status `publicado` e a URL.
 
 ## Teste de conexão do /setup
