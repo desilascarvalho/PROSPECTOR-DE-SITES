@@ -63,8 +63,9 @@ class App(SimpleHTTPRequestHandler):
         if self.path.split('?')[0] == '/api/config':
             cfg = ler_config()
             hg = dict(cfg.get('deploy') or cfg.get('hostgator', {}))
-            hg['senhaDefinida'] = bool(hg.get('senha'))
-            hg.pop('senha', None)  # a senha NUNCA sai do arquivo
+            hg['senhaDefinida'] = bool(hg.get('senha')) or bool(hg.get('sshPass'))
+            hg.pop('senha', None)   # a senha NUNCA sai do arquivo
+            hg.pop('sshPass', None) # a senha SSH NUNCA sai do arquivo
             return self._json(200, {'contratante': cfg.get('contratante', {}), 'deploy': hg})
         if self.path.split('?')[0] == '/api/leads':
             c = conexao(); c.row_factory = sqlite3.Row
@@ -92,7 +93,7 @@ class App(SimpleHTTPRequestHandler):
                     hg = cfg.get('deploy', {})
                     for k, v in corpo['deploy'].items():
                         if not isinstance(v, str): continue
-                        if k == 'senha' and v == '': continue  # em branco = mantém a atual
+                        if k in ('senha', 'sshPass') and v == '': continue  # em branco = mantém a atual
                         hg[k] = v
                     cfg['deploy'] = hg
                 elif 'hostgator' in corpo:  # compatibilidade com config antigo

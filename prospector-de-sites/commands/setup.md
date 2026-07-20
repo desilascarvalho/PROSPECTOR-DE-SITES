@@ -43,8 +43,22 @@ Salve tudo em `prospector-config.json` na pasta conectada, neste formato:
   "assinatura": { "nome": "", "apresentacao": "", "whatsapp": "" },
   "prospeccao": { "nichos": ["nutricionistas", "psicologos", "advogados", "psiquiatras"], "cidade": "", "leadsPorBusca": 10 },
   "envio": { "modo": "rascunho" },
-  "deploy": { "usuario": "", "dominio": "", "servidor": "", "senha": "", "pastaBase": "clientes" }
+  "deploy": {
+    "metodo": "ftp",
+    "usuario": "", "dominio": "", "servidor": "", "senha": "", "pastaBase": "clientes"
+  }
 }
+```
+
+Para SSH, o bloco `deploy` fica:
+
+```json
+  "deploy": {
+    "metodo": "ssh",
+    "sshHost": "", "sshPort": 22, "sshUser": "", "sshPass": "",
+    "remotePath": "/home/usuario/public_html",
+    "dominio": "", "pastaBase": "clientes"
+  }
 ```
 
 Se os dados de deploy foram informados, teste a conexão seguindo a skill `deploy-site`: publique uma página `teste.html` simples e informe a URL pública ao usuário. Se o teste falhar, diagnostique (credenciais, servidor, método de upload) antes de concluir.

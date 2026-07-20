@@ -50,14 +50,14 @@
     <li><b>Extensão Claude in Chrome</b> conectada — é ela que navega no Google Maps.</li>
     <li><b>Conector do Gmail</b> ativo (Configurações → Conectores) — rascunhos de proposta e leitura de respostas.</li>
     <li><b>Conector do Google Drive</b> — planilha de leads no Google Sheets.</li>
-    <li><b>Hospedagem com FTP</b> (plano M ou superior, que aceita vários sites) com os dados do cPanel em mãos: usuário, domínio e servidor (aparecem na tela inicial do cPanel, coluna "General Information").</li>
+    <li><b>Hospedagem com FTP, cPanel ou SSH</b> (que aceite vários sites) com os dados de acesso em mãos: FTP (usuário, servidor) ou SSH (host, porta, usuário).</li>
     <li><b>Uma pasta conectada no Cowork</b> (ex.: "Clientes") — tudo fica salvo nela.</li>
   </ul>
 
   <h2 id="setup">2. Configuração (uma vez só)</h2>
   <ol>
     <li>Digite <span class="cmd">/setup</span> no Cowork e responda: sua assinatura (nome, apresentação, WhatsApp), nichos preferidos, cidade e quantos leads por busca.</li>
-    <li><b>Dados da hospedagem: tudo no dashboard, nada no chat.</b> Abra o dashboard (<code>iniciar-dashboard.bat</code>) → aba <b>Configurações</b> → seção <b>Conexão FTP</b> → preencha usuário, domínio, servidor (os três estão na tela inicial do cPanel, coluna "General Information") e a senha → <b>Salvar conexão</b>. Tudo vai direto pro arquivo no seu computador — o chat nunca vê.</li>
+    <li><b>Dados da hospedagem: tudo no dashboard, nada no chat.</b> Abra o dashboard (<code>iniciar-dashboard.bat</code>) → aba <b>Configurações</b> → seção <b>Conexão de publicação</b> → escolha FTP ou SSH e preencha os dados → <b>Salvar conexão</b>. Tudo vai direto pro arquivo no seu computador — o chat nunca vê.</li>
     <li>O Claude faz um teste de publicação e te entrega este manual + o dashboard prontos na pasta.</li>
   </ol>
   <div class="box dica">💡 Preencha também seus dados de contratante na aba <b>Configurações</b> do dashboard — todo contrato já sai com eles.</div>
@@ -76,10 +76,10 @@
   </table>
   <div class="box aviso">⚠️ A regra de ouro do redesign: <b>nada é inventado</b>. Serviços, credenciais e fotos vêm do site real do cliente. O texto é reescrito com técnica — dizendo a mesma verdade.</div>
 
-  <h2 id="publicacao">4. Publicação automática — configure UMA vez e nunca mais faça login</h2>
+  <h2 id="publicacao">4. Publicação automática — FTP ou SSH/rsync, configure UMA vez e nunca mais faça login</h2>
   <p>O segredo é a senha no arquivo (passo 2 acima). Com ela preenchida:</p>
   <ol>
-    <li>Preencha a Conexão FTP no dashboard (aba Configurações), incluindo a senha.</li>
+    <li>Preencha a conexão no dashboard (aba Configurações), escolha FTP ou SSH e inclua a senha.</li>
     <li><b>Uma única vez</b>: dê um duplo clique no <code>instalar-publicador.bat</code> da sua pasta. Ele registra no Windows um publicador que verifica a fila a cada minuto, invisível. (Se reclamar de permissão: botão direito → Executar como administrador.)</li>
     <li>Pronto: de agora em diante o <span class="cmd">/publicar</span> prepara a fila e em até 1 minuto os sites sobem SOZINHOS — sem janela, sem clique, sem cPanel. O Claude confere as URLs e o cadeado HTTPS na sequência.</li>
   </ol>
@@ -97,7 +97,7 @@
     <li><b>Follow-ups</b> — quem está parado há dias, com alerta laranja.</li>
     <li><b>Contratos</b> — ver a folha, imprimir, baixar o Word travado, marcar assinado.</li>
     <li><b>Financeiro</b> — recebido, a receber, MRR das manutenções e projeção 12 meses.</li>
-    <li><b>Configurações</b> — seus dados de contratante + Conexão FTP com a senha (preencha uma vez; a senha nunca passa pelo chat).</li>
+    <li><b>Configurações</b> — seus dados de contratante + conexão de publicação com a senha (preencha uma vez; a senha nunca passa pelo chat).</li>
   </ul>
 
   <h2 id="mac">6. E no Mac?</h2>
@@ -107,7 +107,7 @@
   <h3>O comparador não apareceu depois do /redesenhar</h3>
   <p>Peça: "gere o comparar.html e atualize o dashboard". A partir da v0.11.1 a entrega é travada e ele sempre vem — e também fica na aba <b>Comparador</b> do dashboard.</p>
   <h3>Pede login no cPanel toda hora</h3>
-  <p>Falta a senha da hospedagem. Abra o dashboard → Configurações → Conexão FTP, cole a senha e salve — o fluxo vira automático. Cada pasta conectada tem o próprio config.</p>
+  <p>Falta a senha da hospedagem. Abra o dashboard → Configurações → Conexão de publicação, cole a senha e salve — o fluxo vira automático. Cada pasta conectada tem o próprio config.</p>
   <h3>Meu link parece estranho / domínio cheio de números</h3>
   <p>Você está usando o subdomínio temporário da hospedagem. Ative seu domínio próprio (grátis no plano — cPanel → Domains) e atualize o campo domínio nas Configurações do dashboard. Link bonito = cliente confiante; o plugin segura as propostas enquanto o domínio for o temporário.</p>
   <h3>Meu e-mail pode cair no spam?</h3>
